@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Império Auto Peças — Projeto de Branding & Marketing Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  :root {
+    --black: #070707;
+    --black-2: #0d0d0d;
+    --black-3: #141414;
+    --white: #f5f5f0;
+    --white-dim: rgba(245,245,240,0.6);
+    --green: #22c55e;
+    --green-glow: rgba(34,197,94,0.15);
+    --gold: #d4a017;
+    --gold-light: #f0c040;
+    --gold-glow: rgba(212,160,23,0.18);
+    --gray: #2a2a2a;
+    --gray-2: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --border-gold: rgba(212,160,23,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: auto; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection { background: var(--gold); color: var(--black); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(7,7,7,0.9), transparent);
+    backdrop-filter: blur(0px);
+    transition: backdrop-filter 0.4s;
+  }
+  nav.scrolled { backdrop-filter: blur(12px); background: rgba(7,7,7,0.85); }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-cta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 0.6rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-video-wrap video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.28) saturate(0.6);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,160,23,0.04), transparent),
+      linear-gradient(to bottom, rgba(7,7,7,0.2) 0%, rgba(7,7,7,0.1) 50%, rgba(7,7,7,0.95) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 2rem;
+    max-width: 1100px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 12rem);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title .line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero-title .line-inner {
+    display: block;
+    transform: translateY(110%);
+  }
+
+  .hero-title .highlight { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    color: var(--white-dim);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    opacity: 0;
+  }
+
+  .hero-subtitle strong {
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .hero-cta-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    opacity: 0;
+  }
+
+  .btn-gold {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: none;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.12);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .btn-gold:hover::after { transform: translateX(0); }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--gold-glow); }
+
+  .btn-outline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+  }
+
+  .scroll-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* SECTIONS COMMON */
+  section {
+    position: relative;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+  }
+
+  .section-title .accent { color: var(--gold); }
+  .section-title .green { color: var(--green); }
+
+  /* ABOUT */
+  #about {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    margin-top: 5rem;
+  }
+
+  .about-left p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--white-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-left strong { color: var(--white); font-weight: 500; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .service-card {
+    background: var(--black-2);
+    padding: 1.8rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+
+  .service-card:hover { background: var(--black-3); }
+  .service-card:hover::after { height: 100%; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  /* IDENTITY */
+  #identity {
+    padding: 10rem 0;
+    background: var(--black-2);
+    overflow: hidden;
+  }
+
+  .identity-header {
+    margin-bottom: 6rem;
+  }
+
+  .moodboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 4rem;
+  }
+
+  .mood-cell {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mood-cell-1 {
+    grid-row: 1 / 3;
+    min-height: 400px;
+    background: #0d0d0d;
+  }
+
+  .mood-cell-2, .mood-cell-3, .mood-cell-4, .mood-cell-5 {
+    min-height: 200px;
+    background: #111;
+  }
+
+  .mood-cell-2 { background: linear-gradient(135deg, #0d0d0d, #1a1200); }
+  .mood-cell-3 { background: linear-gradient(135deg, #0a1a0a, #0d0d0d); }
+  .mood-cell-4 { background: linear-gradient(135deg, #1a1a1a, #0d0d0d); }
+  .mood-cell-5 { background: linear-gradient(135deg, #0d0d0d, #1a0000); }
+
+  .mood-content {
+    padding: 2rem;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+  }
+
+  .logo-concept {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .logo-concept .imp { color: var(--white); }
+  .logo-concept .erio { color: var(--gold); }
+  .logo-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-top: 0.3rem;
+  }
+
+  .mood-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-bottom: 1rem;
+  }
+
+  .color-swatch {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+  }
+
+  .palette-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .palette-item {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .palette-swatch { width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 1rem; }
+  .palette-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--white);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .palette-hex {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem;
+    color: var(--white-dim);
+  }
+
+  /* BIG TEXT MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: marqueeScroll 18s linear infinite;
+  }
+
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+    color: var(--white-dim);
+    flex-shrink: 0;
+  }
+
+  .marquee-item .sep { color: var(--gold); margin: 0 2rem; }
+
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* BEFORE/AFTER */
+  #transformation {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+
+  .transform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 5rem;
+  }
+
+  .transform-col {
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .transform-col.before {
+    background: var(--gray-2);
+    border: 1px solid var(--border);
+  }
+
+  .transform-col.after {
+    background: linear-gradient(135deg, #0a1200, #070d00);
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .transform-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .before .transform-label { color: rgba(255,255,255,0.3); }
+  .after .transform-label { color: var(--green); }
+
+  .transform-items { list-style: none; }
+  .transform-items li {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--white-dim);
+  }
+
+  .transform-items li .icon { width: 18px; height: 18px; flex-shrink: 0; }
+  .before li .icon { color: rgba(255,255,255,0.2); }
+  .after li { color: var(--white); }
+  .after li .icon { color: var(--green); }
+
+  .transform-divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 50px; height: 50px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--black);
+  }
+
+  /* PRICING */
+  #pricing {
+    padding: 10rem 0;
+    background: var(--black-2);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 1fr;
+    gap: 0;
+    margin-top: 5rem;
+    align-items: start;
+  }
+
+  .price-card {
+    border: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+    position: relative;
+    background: var(--black);
+    transition: transform 0.3s;
+  }
+
+  .price-card:hover { transform: translateY(-4px); }
+
+  .price-card.featured {
+    background: var(--black-3);
+    border-color: var(--gold);
+    border-width: 1px;
+    z-index: 2;
+    padding: 4rem 2.5rem;
+    margin: -1rem 0;
+    box-shadow: 0 0 60px var(--gold-glow);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.5rem;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .plan-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .featured .plan-title { color: var(--gold); }
+
+  .plan-desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    color: var(--white-dim);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .plan-price {
+    margin-bottom: 2rem;
+  }
+
+  .plan-price .currency {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: var(--white-dim);
+    vertical-align: top;
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+
+  .plan-price .amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .featured .plan-price .amount { color: var(--gold); }
+
+  .plan-price .period {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    color: var(--white-dim);
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .plan-features { list-style: none; margin-bottom: 2.5rem; }
+  .plan-features li {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: var(--white-dim);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .plan-features li::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .featured .plan-features li { color: var(--white); }
+  .featured .plan-features li::before { background: var(--green); }
+
+  /* TIMELINE */
+  #timeline {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    margin-top: 5rem;
+    position: relative;
+  }
+
+  .timeline-grid::before {
+    content: '';
+    position: absolute;
+    top: 2.2rem;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    z-index: 0;
+  }
+
+  .timeline-step {
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-dot {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 15px var(--gold-glow);
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .step-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  .step-period {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* RESULTS */
+  #results {
+    padding: 10rem 0;
+    background: var(--black-2);
+    overflow: hidden;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-top: 5rem;
+  }
+
+  .result-card {
+    background: var(--black);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 2px solid transparent;
+    transition: border-color 0.4s, background 0.3s;
+  }
+
+  .result-card:hover { border-top-color: var(--gold); background: var(--black-2); }
+
+  .result-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .result-desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  /* CTA FINAL */
+  #cta-final {
+    padding: 12rem 0;
+    background: var(--black);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22vw;
+    color: rgba(212,160,23,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-content { position: relative; z-index: 1; }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.95;
+    margin-bottom: 2rem;
+  }
+
+  .cta-title .line-1 { color: var(--white-dim); }
+  .cta-title .line-2 { color: var(--gold); }
+
+  .cta-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    color: var(--white-dim);
+    max-width: 500px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.7;
+  }
+
+  .cta-contact {
+    margin-top: 3rem;
+  }
+
+  .cta-contact p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-contact a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+
+  .cta-contact a:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    color: var(--white-dim);
+  }
+
+  footer .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  footer .brand span { color: var(--gold); }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+
+  .stat-item {
+    padding: 2.5rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: var(--white-dim);
+    margin-top: 0.5rem;
+  }
+
+  /* HORIZONTAL SCROLL SECTION */
+  #camera-scroll {
+    height: 300vh;
+    position: relative;
+  }
+
+  .sticky-panel {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .cards-track {
+    display: flex;
+    gap: 2rem;
+    padding: 0 4rem;
+    will-change: transform;
+  }
+
+  .scroll-card {
+    flex-shrink: 0;
+    width: 340px;
+    background: var(--black-2);
+    border: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .scroll-card-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+
+  .scroll-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .scroll-card-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+
+  /* LOADING SCREEN */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .loader-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    opacity: 0;
+  }
+
+  .loader-logo span { color: var(--gold); }
+
+  .loader-bar {
+    width: 200px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loader-progress {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.05s linear;
+  }
+
+  /* PINNED SECTION */
+  #pinned-intro {
+    height: 250vh;
+    position: relative;
+  }
+
+  .pinned-content {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .pinned-inner {
+    padding: 0 4rem;
+    max-width: 1200px;
+  }
+
+  .pinned-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 2rem;
+  }
+
+  .pinned-title .word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    margin-right: 0.08em;
+  }
+
+  .pinned-title .word-inner { display: block; }
+
+  .pinned-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    color: var(--white-dim);
+    max-width: 550px;
+    line-height: 1.7;
+  }
+
+  /* SECTION DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .container { padding: 0 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .moodboard { grid-template-columns: 1fr; }
+    .mood-cell-1 { grid-row: auto; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .price-card.featured { margin: 0; padding: 3rem 2.5rem; }
+    .timeline-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .timeline-grid::before { display: none; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .transform-grid { grid-template-columns: 1fr; }
+    .transform-divider { display: none; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .stat-row { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    #camera-scroll { height: auto; }
+    .sticky-panel { position: relative; height: auto; }
+    .cards-track { flex-direction: column; transform: none !important; }
+    .scroll-card { width: 100%; opacity: 1; transform: none; }
+    .palette-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* UTILITY */
+  .reveal { opacity: 0; transform: translateY(30px); }
+  .green-text { color: var(--green); }
+  .gold-text { color: var(--gold); }
+
+  /* GLOWING BORDER EFFECT */
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--gold), transparent, var(--green), transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .glow-border:hover::before { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">IMP<span>É</span>RIO</div>
+  <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">IMP<span>É</span>RIO <span style="color:var(--white-dim);font-size:0.8rem;font-family:'Space Grotesk',sans-serif;font-weight:300;letter-spacing:0.1em"> / Projeto</span></div>
+  <a href="#cta-final" class="nav-cta">Fechar Projeto</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline poster="">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-mechanic-in-a-workshop-9993-large.mp4" type="video/mp4">
+      <!-- Fallback: mostrará o fundo escuro com overlay dourado se o vídeo não carregar -->
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content" id="heroContent">
+    <div class="hero-eyebrow" id="heroEyebrow">Proposta Comercial Exclusiva · 2025</div>
+
+    <h1 class="hero-title" id="heroTitle">
+      <span class="line"><span class="line-inner">IMP<span class="highlight">É</span>RIO</span></span>
+      <span class="line"><span class="line-inner">AUTO</span></span>
+      <span class="line"><span class="line-inner">PE<span class="highlight">Ç</span>AS</span></span>
+    </h1>
+
+    <p class="hero-subtitle" id="heroSubtitle">
+      Construindo a <strong>nova referência</strong> em peças para moto<br>no Acre — com estratégia, identidade e tecnologia.
+    </p>
+
+    <div class="hero-cta-wrap" id="heroCta">
+      <a href="#about" class="btn-gold">Ver o Projeto Completo</a>
+      <a href="#pricing" class="btn-outline">Ver Investimento</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span class="scroll-text">Role para baixo</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label reveal">01 — Sobre o Projeto</div>
+    <h2 class="section-title reveal">
+      UMA <span class="accent">SOLUÇÃO</span><br>COMPLETA
+    </h2>
+
+    <div class="about-grid">
+      <div class="about-left">
+        <p class="reveal">
+          A <strong>Império Auto Peças</strong> tem tudo para se tornar a loja de referência em peças para moto no Acre. O que falta agora é uma presença visual forte, uma estratégia de marketing consistente e a infraestrutura digital certa para converter atenção em vendas.
+        </p>
+        <p class="reveal">
+          Este projeto foi desenvolvido para entregar <strong>do zero ao profissional</strong> — da identidade visual ao catálogo online, da fotografia ao Instagram gerenciado, do Google Maps ao conteúdo em vídeo.
+        </p>
+        <p class="reveal">
+          Você não vai contratar um serviço isolado. Vai contratar um <strong>ecossistema completo</strong> de posicionamento e crescimento.
+        </p>
+
+        <div class="stat-row reveal">
+          <div class="stat-item">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Serviços Integrados</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">60d</div>
+            <div class="stat-label">Para Resultados Visíveis</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Profissional Responsável</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <div class="service-num">01</div>
+          <div class="service-name">Site / Catálogo Digital</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">02</div>
+          <div class="service-name">Fotografia de Produtos</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">03</div>
+          <div class="service-name">Fotografia da Loja</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">04</div>
+          <div class="service-name">Catálogo Digital & PDF</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">05</div>
+          <div class="service-name">Google Maps & Business</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">06</div>
+          <div class="service-name">Gestão do Instagram</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">07</div>
+          <div class="service-name">Produção de Vídeos</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">08</div>
+          <div class="service-name">Identidade Visual</div>
+        </div>
+        <div class="service-card" style="grid-column: 1 / -1;">
+          <div class="service-num">09</div>
+          <div class="service-name">Estratégia de Marketing para Crescimento Local</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PINNED SCROLL SECTION -->
+<section id="pinned-intro">
+  <div class="pinned-content">
+    <div class="pinned-inner">
+      <div class="section-label" id="pinnedLabel" style="opacity:0">02 — Diferencial</div>
+      <h2 class="pinned-title" id="pinnedTitle">
+        <span class="word"><span class="word-inner">POR</span></span>
+        <span class="word"><span class="word-inner" style="color:var(--gold)">QUÊ</span></span>
+        <br>
+        <span class="word"><span class="word-inner">UM</span></span>
+        <span class="word"><span class="word-inner" style="color:var(--green)">PROJETO</span></span>
+        <br>
+        <span class="word"><span class="word-inner">COMPLETO?</span></span>
+      </h2>
+      <p class="pinned-sub" id="pinnedSub" style="opacity:0">
+        Serviços isolados criam buracos na estratégia. Uma marca sem foto boa parece amadora. Um Instagram bonito sem site não converte. Um site sem tráfego não vende. Tudo precisa funcionar junto — e é exatamente isso que este projeto entrega.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CAMERA SCROLL CARDS -->
+<section id="camera-scroll">
+  <div class="sticky-panel">
+    <div class="cards-track" id="cardsTrack">
+      <div class="scroll-card" id="sc0">
+        <div class="scroll-card-icon">ID</div>
+        <div class="scroll-card-title">Identidade que Impõe Respeito</div>
+        <div class="scroll-card-text">Logo, paleta, tipografia e guia de marca criados para transmitir autoridade desde o primeiro contato. Nenhum cliente subestima uma marca que parece profissional.</div>
+      </div>
+      <div class="scroll-card" id="sc1">
+        <div class="scroll-card-icon">📸</div>
+        <div class="scroll-card-title">Fotos que Vendem</div>
+        <div class="scroll-card-text">Fotografia profissional de produtos e do espaço físico da loja. Imagens que elevam a percepção de qualidade e geram confiança antes mesmo do cliente entrar.</div>
+      </div>
+      <div class="scroll-card" id="sc2">
+        <div class="scroll-card-icon">🌐</div>
+        <div class="scroll-card-title">Presença Digital Estratégica</div>
+        <div class="scroll-card-text">Site, catálogo digital, Google Maps otimizado e Business Profile configurado para aparecer nas buscas locais quando o cliente procurar por peças de moto.</div>
+      </div>
+      <div class="scroll-card" id="sc3">
+        <div class="scroll-card-icon">📱</div>
+        <div class="scroll-card-title">Instagram que Cresce</div>
+        <div class="scroll-card-text">Gestão estratégica com publicações consistentes, Reels com engajamento, conteúdo que educa e posiciona a Império como autoridade no segmento moto no Acre.</div>
+      </div>
+      <div class="scroll-card" id="sc4">
+        <div class="scroll-card-icon">🎬</div>
+        <div class="scroll-card-title">Vídeos que Engajam</div>
+        <div class="scroll-card-text">Captação e edição de Reels, vídeos institucionais e conteúdo de produto com linguagem do segmento — forte, técnica e aspiracional para o público motociclista.</div>
+      </div>
+      <div class="scroll-card" id="sc5">
+        <div class="scroll-card-icon">📈</div>
+        <div class="scroll-card-title">Estratégia de Longo Prazo</div>
+        <div class="scroll-card-text">Acompanhamento contínuo com métricas, ajustes de rota e relatórios mensais. O projeto não termina na entrega — evolui junto com a loja.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IDENTITY -->
+<section id="identity">
+  <div class="container">
+    <div class="identity-header">
+      <div class="section-label reveal">03 — Identidade Visual</div>
+      <h2 class="section-title reveal">
+        A MARCA QUE<br>A <span class="accent">REGIÃO</span> VAI<br>RECONHECER
+      </h2>
+    </div>
+
+    <div class="moodboard reveal">
+      <div class="mood-cell mood-cell-1">
+        <div class="mood-content">
+          <div style="margin-bottom:1.5rem">
+            <div class="mood-label">Conceito de Logo</div>
+            <div class="logo-concept"><span class="imp">IMP</span><span class="erio">ÉRIO</span></div>
+            <div class="logo-sub">AUTO PEÇAS · ACRE</div>
+          </div>
+          <div style="width:60px;height:1px;background:var(--gold);margin:0 auto 1.5rem"></div>
+          <div class="mood-label" style="font-size:0.6rem;color:var(--white-dim)">Poder · Precisão · Confiança</div>
+        </div>
+      </div>
+      <div class="mood-cell mood-cell-2">
+        <div class="mood-content">
+          <div class="mood-label">Personalidade</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);line-height:1.2">POTENTE<br>CONFIÁVEL<br>REGIONAL</div>
+        </div>
+      </div>
+      <div class="mood-cell mood-cell-3">
+        <div class="mood-content">
+          <div class="mood-label">Tom Visual</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:0.8rem;color:var(--white-dim);line-height:1.8">Masculino<br>Premium<br>Técnico<br>Agressivo</div>
+        </div>
+      </div>
+      <div class="mood-cell mood-cell-4">
+        <div class="mood-content">
+          <div class="mood-label">Tipografia</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--white)">DISPLAY</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;color:var(--white-dim);margin-top:0.25rem">Texto Corrido</div>
+        </div>
+      </div>
+      <div class="mood-cell mood-cell-5">
+        <div class="mood-content">
+          <div class="mood-label">Aplicação</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:0.72rem;color:var(--white-dim);line-height:1.8">Uniforme<br>Papelaria<br>Digital<br>Sinalização</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="palette-row reveal">
+      <div class="palette-item" style="background:#070707">
+        <div class="palette-swatch" style="background:#070707;border:1px solid rgba(255,255,255,0.1)"></div>
+        <span class="palette-name">Preto Principal</span>
+        <span class="palette-hex">#070707</span>
+      </div>
+      <div class="palette-item" style="background:#141414">
+        <div class="palette-swatch" style="background:#141414;border:1px solid rgba(255,255,255,0.1)"></div>
+        <span class="palette-name">Preto Secundário</span>
+        <span class="palette-hex">#141414</span>
+      </div>
+      <div class="palette-item" style="background:#d4a017">
+        <div class="palette-swatch" style="background:#d4a017"></div>
+        <span class="palette-name" style="color:#070707">Ouro Imperial</span>
+        <span class="palette-hex" style="color:rgba(0,0,0,0.6)">#D4A017</span>
+      </div>
+      <div class="palette-item" style="background:#22c55e">
+        <div class="palette-swatch" style="background:#22c55e"></div>
+        <span class="palette-name" style="color:#070707">Verde Ação</span>
+        <span class="palette-hex" style="color:rgba(0,0,0,0.6)">#22C55E</span>
+      </div>
+      <div class="palette-item" style="background:#f5f5f0">
+        <div class="palette-swatch" style="background:#f5f5f0;border:1px solid rgba(0,0,0,0.1)"></div>
+        <span class="palette-name" style="color:#070707">Branco Nobre</span>
+        <span class="palette-hex" style="color:rgba(0,0,0,0.5)">#F5F5F0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">FOTOGRAFIA<span class="sep">✦</span></span>
+      <span class="marquee-item">IDENTIDADE VISUAL<span class="sep">✦</span></span>
+      <span class="marquee-item">DESENVOLVIMENTO WEB<span class="sep">✦</span></span>
+      <span class="marquee-item">INSTAGRAM<span class="sep">✦</span></span>
+      <span class="marquee-item">VÍDEO<span class="sep">✦</span></span>
+      <span class="marquee-item">GOOGLE MAPS<span class="sep">✦</span></span>
+      <span class="marquee-item">CATÁLOGO DIGITAL<span class="sep">✦</span></span>
+      <span class="marquee-item">FOTOGRAFIA<span class="sep">✦</span></span>
+      <span class="marquee-item">IDENTIDADE VISUAL<span class="sep">✦</span></span>
+      <span class="marquee-item">DESENVOLVIMENTO WEB<span class="sep">✦</span></span>
+      <span class="marquee-item">INSTAGRAM<span class="sep">✦</span></span>
+      <span class="marquee-item">VÍDEO<span class="sep">✦</span></span>
+      <span class="marquee-item">GOOGLE MAPS<span class="sep">✦</span></span>
+      <span class="marquee-item">CATÁLOGO DIGITAL<span class="sep">✦</span></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BEFORE/AFTER -->
+<section id="transformation">
+  <div class="container">
+    <div class="section-label reveal">04 — Antes e Depois</div>
+    <h2 class="section-title reveal">
+      A <span class="accent">TRANSFOR</span><br>MAÇÃO
+    </h2>
+
+    <div style="position:relative">
+      <div class="transform-grid reveal">
+        <div class="transform-col before">
+          <div class="transform-label">ANTES DO PROJETO</div>
+          <ul class="transform-items">
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Sem identidade visual definida</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Sem presença no Google Maps</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Instagram sem estratégia ou consistência</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Sem site ou catálogo digital</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Fotos amadoras de produtos</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Invisível para o cliente que busca online</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Sem diferencial frente à concorrência</li>
+          </ul>
+        </div>
+        <div class="transform-col after">
+          <div class="transform-label">APÓS O PROJETO</div>
+          <ul class="transform-items">
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Marca visual forte e reconhecível no Acre</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Top resultados no Google para "peças moto Acre"</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Instagram com crescimento orgânico consistente</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Site profissional com catálogo navegável</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Fotos profissionais que geram confiança</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Visível onde o cliente busca — online e offline</li>
+            <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Referência número 1 do segmento na região</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="transform-divider" style="position:relative;width:50px;height:50px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--black);margin:2px auto 0;z-index:10">→</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label reveal">05 — Investimento</div>
+    <h2 class="section-title reveal">
+      ESCOLHA SEU<br><span class="accent">PACOTE</span>
+    </h2>
+    <p class="reveal" style="font-family:'Space Grotesk',sans-serif;font-size:0.9rem;color:var(--white-dim);max-width:500px;line-height:1.7;margin-bottom:1rem">Três planos pensados para diferentes momentos da loja. Todos incluem atendimento direto e exclusivo.</p>
+
+    <div class="pricing-grid reveal">
+      <!-- BÁSICO -->
+      <div class="price-card">
+        <div class="plan-name">Plano 01</div>
+        <div class="plan-title">Básico</div>
+        <div class="plan-desc">Fundação digital para começar com o pé direito. Identidade e presença inicial.</div>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">1.800</span>
+          <span class="period">pagamento único · entrega em 30 dias</span>
+        </div>
+        <ul class="plan-features">
+          <li>Identidade visual (logo + paleta)</li>
+          <li>Fotografia da loja (interna e externa)</li>
+          <li>Cadastro Google Maps & Business</li>
+          <li>1 sessão de fotos de produtos</li>
+          <li>Configuração do Instagram</li>
+          <li>Catálogo PDF básico</li>
+        </ul>
+        <a href="#cta-final" class="btn-outline" style="display:block;text-align:center">Quero esse plano</a>
+      </div>
+
+      <!-- RECOMENDADO -->
+      <div class="price-card featured">
+        <div class="featured-badge">✦ Ideal para Império ✦</div>
+        <div class="plan-name">Plano 02</div>
+        <div class="plan-title">Recomendado</div>
+        <div class="plan-desc">O pacote completo para posicionar a Império como referência em até 60 dias. Nossa indicação.</div>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">3.900</span>
+          <span class="period">+ acompanhamento por 3 meses</span>
+        </div>
+        <ul class="plan-features">
+          <li>Tudo do plano Básico</li>
+          <li>Site institucional / catálogo online</li>
+          <li>3 sessões de fotografia profissional</li>
+          <li>Produção de 4 Reels por mês</li>
+          <li>Gestão do Instagram (3 meses)</li>
+          <li>Catálogo digital interativo</li>
+          <li>Estratégia de marketing completa</li>
+          <li>Relatório mensal de resultados</li>
+        </ul>
+        <a href="#cta-final" class="btn-gold" style="display:block;text-align:center">Quero o projeto completo</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="price-card">
+        <div class="plan-name">Plano 03</div>
+        <div class="plan-title">Premium</div>
+        <div class="plan-desc">Para quem quer dominar o mercado local com presença máxima e acompanhamento longo.</div>
+        <div class="plan-price">
+          <span class="currency">R$</span>
+          <span class="amount">7.500</span>
+          <span class="period">+ acompanhamento por 6 meses</span>
+        </div>
+        <ul class="plan-features">
+          <li>Tudo do plano Recomendado</li>
+          <li>E-commerce / sistema de pedidos</li>
+          <li>Vídeo institucional (1–2 min)</li>
+          <li>6 meses de gestão de Instagram</li>
+          <li>8 Reels por mês</li>
+          <li>Campanha de tráfego pago (Google/Meta)</li>
+          <li>Manual de marca completo</li>
+          <li>Suporte prioritário direto</li>
+        </ul>
+        <a href="#cta-final" class="btn-outline" style="display:block;text-align:center">Quero o premium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-label reveal">06 — Cronograma</div>
+    <h2 class="section-title reveal">
+      COMO O PROJETO<br><span class="accent">ACONTECE</span>
+    </h2>
+
+    <div class="timeline-grid" id="timelineGrid">
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">01</div>
+        <div class="step-title">Diagnóstico</div>
+        <div class="step-desc">Análise da loja, mercado local, concorrência e oportunidades de posicionamento.</div>
+        <div class="step-period">Semana 1</div>
+      </div>
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">02</div>
+        <div class="step-title">Planejamento</div>
+        <div class="step-desc">Criação da estratégia, definição de identidade visual, calendário de conteúdo.</div>
+        <div class="step-period">Semana 2</div>
+      </div>
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">03</div>
+        <div class="step-title">Captação</div>
+        <div class="step-desc">Sessão de fotos, gravação de vídeos institucionais e de produto na loja.</div>
+        <div class="step-period">Semanas 3–4</div>
+      </div>
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">04</div>
+        <div class="step-title">Desenvolvimento</div>
+        <div class="step-desc">Criação do site, catálogo digital, identidade visual e configuração do Google.</div>
+        <div class="step-period">Semanas 4–7</div>
+      </div>
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">05</div>
+        <div class="step-title">Publicação</div>
+        <div class="step-desc">Lançamento do site, Google Maps, primeiro conteúdo e Instagram ativo.</div>
+        <div class="step-period">Semana 8</div>
+      </div>
+      <div class="timeline-step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">06</div>
+        <div class="step-title">Acompanhamento</div>
+        <div class="step-desc">Gestão contínua, relatórios, ajustes de estratégia e crescimento mensal.</div>
+        <div class="step-period">Mês 3–6</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="container">
+    <div class="section-label reveal">07 — Resultados Esperados</div>
+    <h2 class="section-title reveal">
+      O QUE VOCÊ<br>VAI <span class="green">GANHAR</span>
+    </h2>
+
+    <div class="results-grid reveal">
+      <div class="result-card">
+        <div class="result-num">+300%</div>
+        <div class="result-label">Visibilidade Online</div>
+        <div class="result-desc">Aparecendo nas buscas do Google quando o cliente precisa de peças de moto em Rio Branco.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-num">Top 3</div>
+        <div class="result-label">Google Maps Local</div>
+        <div class="result-desc">Perfil otimizado, com avaliações e fotos profissionais que geram cliques e ligações.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-num">+60%</div>
+        <div class="result-label">Autoridade de Marca</div>
+        <div class="result-desc">Clientes percebendo a Império como a loja mais profissional e confiável da região.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-num">2x</div>
+        <div class="result-label">Conversão em Vendas</div>
+        <div class="result-desc">Clientes que chegam pela internet já chegam com intenção de compra — mais prontos para fechar.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-num">∞</div>
+        <div class="result-label">Crescimento Sustentável</div>
+        <div class="result-desc">Uma base digital sólida que cresce com o tempo — cada post, cada foto, cada avaliação acumula valor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-bg-text">IMPÉRIO</div>
+  <div class="container">
+    <div class="cta-content">
+      <div class="section-label reveal" style="justify-content:center">08 — Próximo Passo</div>
+      <h2 class="cta-title reveal">
+        <span class="line-1">VAMOS</span><br>
+        <span class="line-2">CONSTRUIR</span><br>
+        <span class="line-1">JUNTOS?</span>
+      </h2>
+      <p class="cta-sub reveal">
+        O mercado de motos no Acre está crescendo. A Império Auto Peças tem o potencial — este projeto entrega a estrutura para dominar o segmento.
+      </p>
+      <div class="hero-cta-wrap reveal" style="opacity:1">
+        <a href="https://wa.me/5568999999999?text=Ol%C3%A1!%20Vi%20o%20projeto%20para%20Imp%C3%A9rio%20Auto%20Pe%C3%A7as%20e%20quero%20saber%20mais." class="btn-gold" target="_blank">
+          Fechar o Projeto Agora
+        </a>
+        <a href="tel:+5568999999999" class="btn-outline">Ligar Agora</a>
+      </div>
+
+      <div class="cta-contact reveal">
+        <p>Contato direto</p>
+        <a href="mailto:seuemail@email.com">seuemail@email.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="brand">IMP<span>É</span>RIO · PROPOSTA 2025</div>
+  <p>Projeto desenvolvido por <strong style="color:var(--white)">Kauã</strong> — Fotografia, Marketing & Desenvolvimento</p>
+  <p style="color:var(--white-dim);font-size:0.65rem">Confidencial · Rio Branco, Acre</p>
+</footer>
+
+<script>
+// ─── LOADER ───────────────────────────────────────
+const loaderLogo = document.querySelector('.loader-logo');
+const loaderProgress = document.getElementById('loaderProgress');
+let progress = 0;
+
+const loaderInterval = setInterval(() => {
+  progress += Math.random() * 15;
+  if (progress > 100) progress = 100;
+  loaderProgress.style.width = progress + '%';
+  if (progress >= 100) clearInterval(loaderInterval);
+}, 80);
+
+document.fonts.ready.then(() => {
+  gsap.to(loaderLogo, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+  setTimeout(() => {
+    progress = 100;
+    loaderProgress.style.width = '100%';
+    setTimeout(initSite, 400);
+  }, 1200);
+});
+
+function initSite() {
+  const loader = document.getElementById('loader');
+  gsap.to(loader, {
+    yPercent: -100,
+    duration: 1,
+    ease: 'power3.inOut',
+    onComplete: () => {
+      loader.style.display = 'none';
+      initLenis();
+      initAnimations();
+    }
+  });
+}
+
+// ─── LENIS ────────────────────────────────────────
+let lenis;
+function initLenis() {
+  lenis = new Lenis({
+    lerp: 0.08,
+    smoothWheel: true,
+    syncTouch: false,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    ScrollTrigger.update();
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+}
+
+// ─── ANIMATIONS ───────────────────────────────────
+function initAnimations() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // NAV
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // HERO REVEAL
+  const tl = gsap.timeline({ delay: 0.2 });
+
+  tl.to('#heroEyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+    .to('#heroTitle .line-inner', {
+      yPercent: 0,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: 'power4.out'
+    }, '-=0.4')
+    .to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+    .to('#heroCta', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.5')
+    .to('#scrollIndicator', { opacity: 1, duration: 0.6 }, '-=0.3');
+
+  // SCROLL INDICATOR FADE ON SCROLL
+  ScrollTrigger.create({
+    start: 'top top',
+    end: '10% top',
+    onUpdate: (self) => {
+      gsap.to('#scrollIndicator', { opacity: 1 - self.progress * 2, duration: 0.2 });
+    }
+  });
+
+  // REVEAL ELEMENTS
+  gsap.utils.toArray('.reveal').forEach((el) => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        }
+      }
+    );
+  });
+
+  // PINNED SECTION
+  const pinnedTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#pinned-intro',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1,
+      pin: '.pinned-content',
+    }
+  });
+
+  pinnedTl
+    .to('#pinnedLabel', { opacity: 1, duration: 0.2 })
+    .from('.pinned-title .word-inner', {
+      yPercent: 105,
+      stagger: 0.08,
+      duration: 0.4,
+      ease: 'power3.out'
+    }, 0.1)
+    .to('#pinnedSub', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 0.4);
+
+  // CARDS SCROLL (desktop only)
+  if (window.innerWidth > 900) {
+    const cardsTrack = document.getElementById('cardsTrack');
+    const cards = gsap.utils.toArray('.scroll-card');
+    const totalWidth = cardsTrack.scrollWidth;
+    const viewportWidth = window.innerWidth;
+
+    // Animate cards in
+    gsap.to(cards, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.12,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#camera-scroll',
+        start: 'top 70%',
+      }
+    });
+
+    // Horizontal scroll
+    gsap.to(cardsTrack, {
+      x: () => -(totalWidth - viewportWidth + 128),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#camera-scroll',
+        start: 'top top',
+        end: () => `+=${totalWidth}`,
+        scrub: 1.2,
+        pin: '.sticky-panel',
+        anticipatePin: 1,
+      }
+    });
+  }
+
+  // TRANSFORM GRID stagger
+  ScrollTrigger.create({
+    trigger: '#transformation',
+    start: 'top 70%',
+    onEnter: () => {
+      gsap.from('.transform-col', {
+        opacity: 0,
+        x: (i) => i === 0 ? -50 : 50,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out'
+      });
+    }
+  });
+
+  // TIMELINE stagger
+  ScrollTrigger.create({
+    trigger: '#timelineGrid',
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.from('.timeline-step', {
+        opacity: 0,
+        y: 30,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: 'power3.out'
+      });
+    }
+  });
+
+  // RESULTS stagger
+  ScrollTrigger.create({
+    trigger: '#results',
+    start: 'top 75%',
+    onEnter: () => {
+      gsap.from('.result-card', {
+        opacity: 0,
+        y: 40,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'power3.out'
+      });
+
+      // Number count up
+      document.querySelectorAll('.result-num').forEach(el => {
+        const text = el.textContent;
+        if (text.includes('%') || text.includes('x')) {
+          const num = parseInt(text.replace(/[^0-9]/g, ''));
+          const suffix = text.replace(/[0-9]/g, '').replace('+', '');
+          const prefix = text.includes('+') ? '+' : '';
+          gsap.from({ val: 0 }, {
+            val: num,
+            duration: 1.5,
+            ease: 'power2.out',
+            onUpdate: function() {
+              el.textContent = prefix + Math.round(this.targets()[0].val) + suffix;
+            }
+          });
+        }
+      });
+    }
+  });
+
+  // PRICING stagger
+  ScrollTrigger.create({
+    trigger: '#pricing',
+    start: 'top 70%',
+    onEnter: () => {
+      gsap.from('.price-card', {
+        opacity: 0,
+        y: 50,
+        stagger: 0.15,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+    }
+  });
+
+  // HERO PARALLAX
+  gsap.to('.hero-video-wrap', {
+    yPercent: 25,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+
+  // CTA BG TEXT PARALLAX
+  gsap.to('.cta-bg-text', {
+    yPercent: -30,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#cta-final',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+    }
+  });
+
+  // SMOOTH ANCHOR LINKS
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target && lenis) {
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -80, duration: 1.8, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>
